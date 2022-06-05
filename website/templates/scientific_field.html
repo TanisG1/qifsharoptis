@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends "base.html" %} {% block title %}Research_Field{% endblock %} {% block content
+%}
+
+<br>
+<h1>Scientific Fields</h1>
+<br>
+
+
+<body>
+    
+
+    <form method="POST">
+        <label for="resfield">Choose a Scientific Field</label>
+        <select name="resfield" id="resfield">
+            {%for field in fields%}
+            <option value="{{field[0]}}">{{field[0]}}</option>
+            {%endfor%}
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <br>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 2px solid rgb(137, 139, 228);
+        }
+    </style>
+
+    <table style="width: 100%">
+        {%if rows%}
+        <tr>
+            <th>Project</th>
+            <th>Researcher's Last Name</th>
+            <th>Researcher's First Name</th>
+        </tr>
+        {% for i in range(rows) %}
+        <tr>
+            {% for j in range(columns) %}
+            <td>{{ results[i][j] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {%endif%}
+    </table>
+
+</body>
+
+{%endblock%}
+
+</html>

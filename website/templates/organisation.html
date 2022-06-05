@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Organisation{% endblock %} {% block content
+    %}
+    <br>
+    <h3 align="center">Organisations with same number of projects on two consecutive years </h3>
+    <br>
+    <body>
+      <style>
+        table,
+        th,
+        td {
+          border: 2px solid rgb(54, 91, 216);
+        }
+      </style>
+      <table style="width:100%">
+        {%if rows%}
+        {% for i in range(rows) %}
+        <tr>
+          {% for j in range(columns) %}
+          <td>{{ result2[i][j] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </table>
+      </body>
+      {% endblock %}

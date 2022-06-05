@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block title %}Research{% endblock %} {% block content
+    %}
+    <br>
+    <h1>Researchers working on 5 or more projects</h1>
+    <br>
+    
+    
+    <body>
+      <br>
+      <ul class="nav nav-tabs">
+        <a class="nav-link" id="researchers_under_40_yo" href="/researcher/researchers_under_40">Researchers under 40 years old</a>
+        <a class="nav-link active" id="researchers_working_on_5_pj" href="/researcher/researchers_working_on_5_pj">Researchers working on 5 or more projects </a>
+      </ul>
+      <br>
+    
+      <style>
+        table,
+        th,
+        td {
+          border: 1px solid rgb(169, 10, 255);
+        }
+      </style>
+    
+      <table style="width: 100%">
+        {%if rows%}
+        <tr>
+          <th>Researcher_name</th>
+          <th>Project number</th>
+        </tr>
+        {%if rows%}
+        {% for i in range(rows) %}
+        <tr>
+          {% for j in range(columns) %}
+          <td>{{ result6[i][j] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+        {%endif%}
+      </table>
+      {%endif%} 
+    </body>
+    {% endblock %}

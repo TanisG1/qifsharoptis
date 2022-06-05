@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends "base.html" %} {% block title %}Project{% endblock %} {% block content
+%}
+
+<br>
+<h1>Best 3 Scientific Field Duos</h1>
+<br>
+
+<body>
+    <br>
+    <ul class="nav nav-tabs">
+        <a class="nav-link " id="researcher_projects" href="/project/researcher_projects">Projects - researcher</a>
+        <a class="nav-link" id="organisation_projects" href="/project/organisation_projects">Projects - organisation</a>
+        <a class="nav-link active" id="best_3_scientific_field_duos" href="/project/best_3_scientific_field_duos">Best 3 Scientific Field Duos</a>
+    </ul>
+    <br>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 2px solid rgb(64, 133, 100);
+        }
+    </style>
+
+    <table style="width: 100%">
+        {%if rows%}
+        <tr>
+            <th>project_name</th>
+            <th>project_id</th>
+            <th>field_duos</th>
+            <th>Appereance_number</th>
+        </tr>
+        {% for i in range(rows) %}
+        <tr>
+            {% for j in range(columns) %}
+            <td>{{ result7[i][j] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {%endif%}
+    </table>
+
+</body>
+
+{%endblock%}
+
+</html>
