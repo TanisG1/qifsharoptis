@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends "base.html" %} {% block title %}Research_Field{% endblock %} {% block content
+{% extends "base.html" %} {% block title %}Scientific_Field{% endblock %} {% block content
 %}
 
 <br>
@@ -8,13 +8,12 @@
 
 
 <body>
-    
 
     <form method="POST">
-        <label for="resfield">Choose a Scientific Field</label>
+        <label for="resfield">The Scientific Field with the most interest is the Field Human Resources</label>
         <select name="resfield" id="resfield">
             {%for field in fields%}
-            <option value="{{field[0]}}">{{field[0]}}</option>
+            <option value="{{field[1]}}"></option>
             {%endfor%}
         </select>
         <br><br>
@@ -27,7 +26,7 @@
         table,
         th,
         td {
-            border: 2px solid rgb(137, 139, 228);
+            border: 2px solid rgb(49, 207, 70);
         }
     </style>
 

@@ -93,15 +93,15 @@ def researcher_projects():
 
 @auth.route('/project/organisation_projects')
 def organisation_projects():
-    cursor.execute('''create view organisation_projects_oh as 
+    cursor.execute('''create view organisation_projects_wow as 
                         select o.Abbreviation as organisation_Abb, p.Project_name as project_name
                         from organisations o 
                         inner join projects p on o.Abbreviation = p.organisation_managing
                         order by organisation_Abb ;''')
-    cursor.execute('select * from organisation_projects;')
+    cursor.execute('select * from organisation_projects_wow;')
     result5 = cursor.fetchall()
     listed5 = list(result5)
-    cursor.execute('drop view organisation_projects_oh;')
+    cursor.execute('drop view organisation_projects_wow;')
     return render_template("organisation_projects.html", result5=listed5, rows=len(result5), columns=len(result5[0]), boolean=True)
 
 # for 3.3
@@ -153,25 +153,18 @@ def organisation():
     return render_template("organisation.html", result2=listed2, rows=len(result2), columns=len(result2[0]), boolean=True)
 
 # for 3.5
-@auth.route('/Project/best_3_scientific_field_duos')
+@auth.route('/project/best_3_scientific_field_duos')
 def best_3_scientific_field_duos():
-    cursor.execute('''create view sf_pj as
-                        select p.title, p.project_id, prf.name  
-                        from Project p 
-                        inner join Project_Research_Field prf on p.project_id = prf.project_id 
-                        order by p.project_id ;''')
-    cursor.execute('''select project_name, sf_pair, count(*) as counter from (
-                    select  sf1.project_name, concat (sf1.field_name,"- ", sf2.field_name) sf_pair
-                    from field sf1 
-                    inner join field sf2 on sf1.project_name = sf2.project_name
-                    where sf1.field_name != sf2.field_name and sf1.field_name < sf2.field_name) A 
-                    group by sf_pair
-                    order by counter desc
-                    limit 3;''')
-    cursor.execute('select * scientific_field;')
+    cursor.execute('''select sf_pair, count(*) as counter from (
+                select  sf1.project_name, concat (sf1.field_name,"- ", sf2.field_name) sf_pair
+                from field sf1 
+                inner join field sf2 on sf1.project_name = sf2.project_name
+                where sf1.field_name != sf2.field_name and sf1.field_name < sf2.field_name) A 
+                group by sf_pair
+                order by counter desc
+                limit 3;''')
     result7 = cursor.fetchall()
     listed7 = list(result7)
-    cursor.execute('drop view sf_pj;')
     return render_template("best_3_scientific_field_duos.html", result7=listed7, rows=len(result7), columns=len(result7[0]), boolean=True)
 
 
@@ -183,23 +176,22 @@ def Researchers_under_40_yo():
                     from Researchers r 
                     inner join works_for_proj wp on r.researcher_id = wp.id 
                     inner join projects p on p.project_name=wp.project_name 
-                    where r.age > 40 AND p.Start_date < current_date()  and p.end_date > current_date()
+                    where r.age < 40 AND p.Start_date < current_date()  and p.end_date > current_date()
                     group by r.researcher_last_name) union 
                      (select r.researcher_last_name, r.researcher_first_name, count(*) as projects_working_on 
                     from Researchers r 
                     inner join projects p on r.researcher_id  = p.directed_from 
-                    where r.age > 40 AND p.Start_date < current_date()  and p.end_date > current_date()
+                    where r.age < 40 AND p.Start_date < current_date()  and p.end_date > current_date()
                     group by r.researcher_last_name ) 
                     order by projects_working_on desc 
                     limit 2;''')
     result = cursor.fetchall()
-
     listed = list(result)
     return render_template("researchers_under_40_yo.html", result=listed, rows=len(result), columns=len(result[0]), boolean=True)
 
 
 # for 3.7
-@auth.route('/executives')
+@auth.route('/executive')
 def executives():
     cursor.execute('''SELECT SUM(P.Amount), C.name, E.executive_id
                         FROM Executives E
@@ -215,7 +207,6 @@ def executives():
    
     result1 = cursor.fetchall()
     listed1 = list(result1)
-    cursor.execute('drop view projects_of_companies;')
     return render_template("executive.html", result1=listed1, rows=len(result1), columns=len(result1[0]), boolean=True)
 
 
